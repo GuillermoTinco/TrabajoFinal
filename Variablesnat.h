@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-
 using namespace std;
 typedef unsigned int entero_positivo;
 typedef int entero;

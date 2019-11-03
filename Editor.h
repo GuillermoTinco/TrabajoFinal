@@ -3,6 +3,8 @@
 
 #include <fstream> // libreria que permite hacer tdo con files
 #include "Variablesnat.h" // los using y typedf además de la libreria iostream
+#include <stdlib.h>
+#include <windows.h>
 class EditorTexto
 {
 private:
@@ -19,7 +21,9 @@ private:
     letras casosiete="7. Buscar una palabra en el archivo"; //35
     letras casoocho="8. Reemplazar una palabra del archivo"; //37
     letras casonueve="9. Cantidad de veces que aparece una palabra en el archivo"; //58
-    letras casodiez="10. Guardar el archivo como PDF"; //30
+    letras casodiez="10. Guardar el archivo como .txt"; //30
+    letras casoonce="11. Guardar el archivo como .pdf"; //30
+
 
 public:
 
@@ -30,15 +34,16 @@ public:
     //se encargará de la interface(metodos)
     nada Dibujar();
     nada Runcasouno(cadena ubicac); //como parametro el archivo
-    nada Runcasodos(cadena ubicac);
+    nada Runcasodos();
     nada Runcasotres(cadena ubicac);
     nada Runcasocuatro(cadena ubicac);
     nada Runcasocinco(cadena ubicac);
     nada Runcasoseis(cadena ubicac);
     nada Runcasosiete(cadena ubicac);
-    nada Runcasoocho(cadena ubicac);
+    nada Runcasoocho();
     nada Runcasonueve(cadena ubicac);
-    nada Runcasodiez(cadena ubicac);
+    nada Runcasodiez();
+    nada Runcasoonce(cadena ubicac);
     //getters
     entero getOpcion(){return opcion;}
     cadena getNombrePrograma(){return NombrePrograma;}
@@ -52,6 +57,7 @@ public:
     cadena getCasoocho(){return casoocho;}
     cadena getCasonueve(){return casonueve;}
     cadena getCasodiez(){return casodiez;}
+    cadena getCasoonce(){ return casoonce;}
     cadena getUbicac(){return ubicac;}
 };
 

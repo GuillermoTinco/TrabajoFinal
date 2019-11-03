@@ -9,11 +9,9 @@ EditorTexto::EditorTexto(entero opcion, cadena ubicac){
     this->opcion=opcion;
     this->ubicac=ubicac;
 }
-//funciones"main"de los metodos... en FUNCIONESFIN estan
-// las funciones de las funciones main de estos metodos de la clase
 nada EditorTexto::Runcasouno(cadena ubicac) {
     string line;
-    ifstream miarchivo(getUbicac()); //para leer el archivo
+    ifstream miarchivo(ubicac); //para leer el archivo
     vector<string> Lineas;
     if(miarchivo.is_open()){
         while(getline(miarchivo,line)){//getline lee las lineas del texto
@@ -25,9 +23,9 @@ nada EditorTexto::Runcasouno(cadena ubicac) {
         cout << Lineas[i] << endl;
     }
 
-} //Listo!!!!!
-nada EditorTexto::Runcasodos(cadena ubicac) {
-    ofstream miarchivo(ubicac);//para escribir en el archivo
+} //Listo!!!
+nada EditorTexto::Runcasodos() {
+    ofstream miarchivo("C:\\Users\\HP\\ARCHIVOS\\Auxiliar.txt");//para escribir en el archivo
     string texto;
     cout <<"Ingrese el texto, cuando finalice ingrese 'XX': "<<endl;
     if(miarchivo.is_open())
@@ -44,9 +42,8 @@ nada EditorTexto::Runcasodos(cadena ubicac) {
         }
         while(texto!="X");
     }
-    cout << "Texto grabado" << endl;
     miarchivo.close();
-}//Listo!!!!!!
+}//Listo!!!
 nada EditorTexto::Runcasotres(cadena ubicac) {} //
 nada EditorTexto::Runcasocuatro(cadena ubicac) {} //
 nada EditorTexto::Runcasocinco(cadena ubicac) {} //
@@ -60,7 +57,6 @@ nada EditorTexto::Runcasosiete(cadena ubicac) {
     //cout << archivo.eof(); === no vale
     cout<<"Ingrese la palabra que desea buscar: ";
     cin>>palabra7;
-    palabra7=palabra7 +" ";
     if(!archivo.is_open()){
         cout<<"No se pudo abrir el archivo";
         exit(1);
@@ -69,7 +65,7 @@ nada EditorTexto::Runcasosiete(cadena ubicac) {
     while(i < numLines){
         //necesito encontrar la cantidad de lineas, listo
         getline(archivo,txt7);
-        texto7+=txt7;
+        texto7+=("\n"+txt7);
         i++;
     }
     if(palabra_en_texto(texto7,palabra7))
@@ -79,17 +75,16 @@ nada EditorTexto::Runcasosiete(cadena ubicac) {
 
     archivo.close();
 
-} //Listo!!!!!//verComynFbn
-nada EditorTexto::Runcasoocho(cadena ubicac) {
-    cadena palabra8, texto8,txt8,reemplazo;
+} //Listo!!!!
+nada EditorTexto::Runcasoocho() {
+    cadena palabra8, texto8,txt8,reemplazo8;
     ifstream archivo(getUbicac());
-    ifstream inutil(ubicac); //otro archivo para poder sacar el num de lineas sin afectar al archivo
+    ifstream inutil(getUbicac()); //otro archivo para poder sacar el num de lineas sin afectar al archivo
     entero numLines=numlineas(inutil); //numero de lineas del documento
     cout<<"Ingrese la palabra que desea reemplazar: ";
     cin>>palabra8;
     cout<<"Ingrese el reemplazo: ";
-    cin>>reemplazo;
-    palabra8=palabra8 +" ";
+    cin>>reemplazo8;
     //apertura del archivo
     //verificación de que el archivo se abrió con éxito
     if(archivo.fail()){
@@ -108,15 +103,15 @@ nada EditorTexto::Runcasoocho(cadena ubicac) {
             texto8+=txt8;
         }
         i++;
-    }//cerrado del archivo
-    reemplazar_palabra(texto8,palabra8,reemplazo);
+    }
+    reemplazar_palabra(texto8,palabra8,reemplazo8);
     cout<<texto8;//la variable texto contiene el archivo modificado
-    ofstream archivoescribir(ubicac); //para escribir en el archivo
+    ofstream archivoescribir("C:\\Users\\HP\\ARCHIVOS\\Auxiliar.txt"); //para escribir en el archivo
     if(archivoescribir.is_open()){
     archivoescribir << texto8;}
     archivo.close();
     archivoescribir.close();
-} //Listo!!!!//VErConFn
+} //Listo!!!
 nada EditorTexto::Runcasonueve(cadena ubicac) {
     cadena palabra9, texto9,txt9;
     ifstream archivo(getUbicac());
@@ -124,7 +119,6 @@ nada EditorTexto::Runcasonueve(cadena ubicac) {
     entero numLines=numlineas(inutil); //numero de lineas del documento
     cout<<"Ingrese la palabra que desea buscar: ";
     cin>>palabra9;
-    palabra9=palabra9 +" ";
     if(archivo.fail()){
         cout<<"No se pudo abrir el archivo";
         exit(1);
@@ -132,64 +126,107 @@ nada EditorTexto::Runcasonueve(cadena ubicac) {
     entero i=0;
     while(i<numLines){
         getline(archivo,txt9);
-        texto9+=txt9;
+        texto9+=("\n"+txt9);
         i++;
     }
     cout<<"La palabra se encuentra "<< palabras_en_texto(texto9,palabra9)<<" veces en el texto "<<endl;
 
     archivo.close();
 
-} //Listo!!!/VErConFn
-nada EditorTexto::Runcasodiez(cadena ubicac) {} //
-//la aparte de dibujar despues se podría hacer con un for y vaya acomodando tdo
+} //Listo!!!
+nada EditorTexto::Runcasodiez() {
+    cadena texto10,txt10;
+    ofstream archivo(getUbicac());
+    ifstream inutil("C:\\Users\\HP\\ARCHIVOS\\Auxiliar.txt");
+    ifstream auxiliar("C:\\Users\\HP\\ARCHIVOS\\Auxiliar.txt");
+    entero numLines=numlineas(inutil);
+    //cout << numLines; === 8
+    //cout << archivo.eof(); === no vale
+    if(!archivo.is_open()){
+        cout<<"No se pudo abrir el archivo";
+        exit(1);
+    }
+    entero i=0;
+    while(i < numLines){
+        if(i<numLines-1){
+            getline(auxiliar,txt10);
+            texto10+=(txt10+"\n");}
+            //while else creado para que no añada una linea en blanco al final
+        else{
+            getline(auxiliar,txt10);
+            texto10+=txt10;
+        }
+        i++;
+    }
+    archivo << texto10 <<endl;
+    cout << "Archivo guardado como .txt";
+    archivo.close();
+} //Listo!!!
+nada EditorTexto::Runcasoonce(cadena ubicac) {
+    cadena texto11,txt11, direcpdf1, direcpdf2, direcpdf3, textopdf;
+    cout << "Ingrese el nombre como lo quiere guardar: ";cin >> direcpdf1;
+    //crear aca en archivo txt
+    direcpdf2 = "C:\\Users\\HP\\textosparapd\\" + direcpdf1 + ".txt";
+    direcpdf3 = "C:\\Users\\HP\\ARCHIVOS\\PDFs\\" + direcpdf1 + ".rb";
+    ofstream archivotxt(direcpdf2);
+    ofstream archivopdf(direcpdf3);
+    ifstream inutil(ubicac);
+    ifstream auxiliar(ubicac);
+    entero numLines=numlineas(inutil);
+    //cout << numLines; === 8
+    //cout << archivo.eof(); === no vale
+    if(!auxiliar.is_open()){
+        cout<<"No se pudo abrir el archivo";
+        exit(1);
+    }
+    entero i=0;
+    while(i < numLines){
+        if(i<numLines-1){
+            getline(auxiliar,txt11);
+            texto11+=(txt11+"\n");}
+            //while else creado para que no añada una linea en blanco al final
+        else{
+            getline(auxiliar,txt11);
+            texto11+=txt11;
+        }
+        i++;
+    }
+    textopdf = "require 'prawn'\n\nwords='"+arcomillas(texto11)+"'\nPrawn::Document.generate('" + direcpdf1 + ".pdf') do |pdf|\n   pdf.text words\nend";
+    archivotxt << textopdf <<endl;
+    archivopdf << textopdf <<endl;
+    cout << "Archivo .txt guardado como .pdf";
+    auxiliar.close();
+} //Listo!!!
 nada EditorTexto::Dibujar(){
     //  hacer td el trabajo de la interface
     //está en elarchivo frame de poo
     cout <<
-             "*--------------------------------------------------------------*" << endl <<
+         "*--------------------------------------------------------------*" << endl <<
          "|                                                              |" << endl <<
          "|                     "<< getNombrePrograma() << "                          |" << endl <<
          "|                                                              |" << endl <<
          "*--------------------------------------------------------------*" << endl <<
-         "|                                                              |" << endl <<
          "| "<< getCasouno() <<"                                           |" << endl <<
-         "|                                                              |" << endl <<
          "*--------------------------------------------------------------*" << endl <<
-         "|                                                              |" << endl <<
          "| "<< getCasodos() <<"                                     |" << endl <<
-         "|                                                              |" << endl <<
          "*--------------------------------------------------------------*" << endl <<
-         "|                                                              |" << endl <<
          "| "<< getCasotres() <<"                           |" << endl <<
-         "|                                                              |" << endl <<
          "*--------------------------------------------------------------*" << endl <<
-         "|                                                              |" << endl <<
          "| "<< getCasocuatro() <<"                 |" << endl <<
-         "|                                                              |" << endl <<
          "*--------------------------------------------------------------*" << endl <<
-         "|                                                              |" << endl <<
          "| "<< getCasocinco() <<"               |" << endl <<
-         "|                                                              |" << endl <<
          "*--------------------------------------------------------------*" << endl <<
-         "|                                                              |" << endl <<
          "| "<< getCasoseis() <<"                              |" << endl <<
-         "|                                                              |" << endl <<
          "*--------------------------------------------------------------*" << endl <<
-         "|                                                              |" << endl <<
          "| "<< getCasosiete() <<"                          |" << endl <<
-         "|                                                              |" << endl <<
          "*--------------------------------------------------------------*" << endl <<
-         "|                                                              |" << endl <<
          "| "<< getCasoocho() <<"                        |" << endl <<
-         "|                                                              |" << endl <<
          "*--------------------------------------------------------------*" << endl <<
-         "|                                                              |" << endl <<
          "| "<< getCasonueve() <<"   |" << endl <<
-         "|                                                              |" << endl <<
          "*--------------------------------------------------------------*" << endl <<
-         "|                                                              |" << endl <<
-         "| "<< getCasodiez() <<"                              |" << endl <<
-         "|                                                              |" << endl <<
+         "| "<< getCasodiez() <<"                             |" << endl <<
+         "*--------------------------------------------------------------*" << endl <<
+         "| "<< getCasoonce() <<"                             |" << endl <<
          "*--------------------------------------------------------------*" << endl <<
          " 0. Salir" << endl;
 } //Listo

@@ -7,7 +7,7 @@ nada funcionsui(EditorTexto Opcion, cadena ubicac){
             Opcion.Runcasouno(ubicac);
             break;
         case 2:
-            Opcion.Runcasodos(ubicac);
+            Opcion.Runcasodos();
             break;
         case 3:
             Opcion.Runcasotres(ubicac);
@@ -25,14 +25,16 @@ nada funcionsui(EditorTexto Opcion, cadena ubicac){
             Opcion.Runcasosiete(ubicac);
             break;
         case 8:
-            Opcion.Runcasoocho(ubicac);
+            Opcion.Runcasoocho();
             break;
         case 9:
             Opcion.Runcasonueve(ubicac);
             break;
         case 10:
-            Opcion.Runcasodiez(ubicac);
+            Opcion.Runcasodiez();
             break;
+        case 11:
+            Opcion.Runcasoonce(ubicac);
     }
 }
 #endif //TRABAJOFINAL_FUNCMAIN_H
