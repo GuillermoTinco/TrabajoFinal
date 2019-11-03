@@ -1,0 +1,86 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+using namespace std;
+typedef int entero;
+typedef string cadena;
+typedef void nada;
+typedef bool tof;
+typedef char caracter;
+typedef unsigned int entero_positivo;
+
+
+nada reemplazar(entero& desde, entero& hasta,cadena& texto,cadena& reemplazo,cadena& palabra){
+    vector<caracter> txt;
+    for (char i : texto) {
+        txt.push_back(i);
+    }
+    for(entero i=hasta;i>=desde;i--){
+        txt.erase(txt.begin()+i);
+    }
+    for (entero i=reemplazo.size()-1;i>=0;i--){
+        txt.insert(txt.begin()+desde,reemplazo[i]);
+    }
+    cadena newtxt;
+    for(char i : txt){
+        newtxt+=i;
+    }
+    texto=newtxt;
+}
+
+
+nada reemplazar_palabra(cadena& texto, cadena& palabra, cadena& reemplazo){
+    entero auxPal=0,auxw=0,desde,hasta,contador=0, confirmador=0;entero_positivo i;tof caso_especial=false,mayus=true,minus=true;
+    if (palabra.size()==reemplazo.size()){
+        for(entero_positivo j=0;j<palabra.size();j++){
+            if(toupper(palabra[j])!=reemplazo[j]) mayus=false;
+            if(tolower(palabra[j])!=reemplazo[j]) minus=false;
+            if(mayus or minus)caso_especial=true;
+        }
+    }
+    while(auxw==0) {
+        for (i = 0; i < texto.size(); i++) {
+            if (toupper(texto[i])==toupper(palabra[auxPal])) {
+                auxPal++;
+                if (auxPal == palabra.size()) {
+                    if ((toupper(texto[i+1])<65 or toupper(texto[i+1])>90)and(toupper(texto[i-auxPal])<65 or toupper(texto[i-auxPal])>90)) {
+                        contador++;
+                        if(contador>confirmador){
+                            if(caso_especial)confirmador++;
+                            contador=0;
+                            hasta = i;
+                            desde = i - auxPal +1;
+                            auxPal = 0;
+                            reemplazar(desde, hasta, texto, reemplazo, palabra);
+                            break;
+                        }
+                    }
+                }
+            }
+            else auxPal = 0;
+        }
+        if (i==texto.size()) auxw++;
+    }
+}
+
+
+entero main(){
+    cadena palabra, txt,texto, reemplazo;ifstream archivo;
+    cout<<"Ingrese la palabra que desea reemplazar: ";
+    cin>>palabra;
+    cout<<"Ingrese el reemplazo: ";
+    cin>>reemplazo;
+    archivo.open(R"(C:\Users\STEFANO\Desktop\POO.txt)");
+    if(archivo.fail()){
+        cout<<"No se pudo abrir el archivo";
+        exit(1);
+    }
+    while(!archivo.eof()){
+        getline(archivo,txt);
+        texto+=(txt+"\n");
+    }
+    archivo.close();
+    reemplazar_palabra(texto,palabra,reemplazo);
+    cout<<texto;
+    return 0;
+}

@@ -1,0 +1,47 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+typedef int entero;
+typedef string cadena;
+typedef void nada;
+typedef bool tof;
+typedef unsigned int entero_positivo;
+
+
+entero palabra_en_texto(cadena& texto, cadena& palabra){
+    entero auxPal=0,contador=0;
+    for(entero_positivo i=0;i<texto.size();i++){
+        if(toupper(texto[i])==toupper(palabra[auxPal])){
+            auxPal++;
+            if (auxPal==palabra.size()){
+                if((toupper(texto[i+1])<65 or toupper(texto[i+1])>90)and(toupper(texto[i-auxPal])<65 or toupper(texto[i-auxPal])>90)){
+                    auxPal=0;contador++;
+                }
+            }
+        }
+        else
+            auxPal=0;
+    }
+    return contador;
+}
+
+
+entero main(){
+    cadena palabra, texto, txt;ifstream archivo;
+    cout<<"Ingrese la palabra que desea buscar: ";
+    cin>>palabra;
+    archivo.open(R"(C:\Users\STEFANO\Desktop\POO.txt)");
+    if(archivo.fail()){
+        cout<<"No se pudo abrir el archivo";
+        exit(1);
+    }
+    while(!archivo.eof()){
+        getline(archivo,txt);
+        texto+=("\n"+txt);
+    }
+    if(palabra_en_texto(texto,palabra)) cout<<"Se encuentra en el texto.";
+    else cout<<"No se encuentra en el texto.";
+
+    archivo.close();
+    return 0;
+}
