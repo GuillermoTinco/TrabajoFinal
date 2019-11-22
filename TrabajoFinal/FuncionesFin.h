@@ -1,0 +1,309 @@
+#ifndef TRABAJOFINAL_FUNCIONESFIN_H
+#define TRABAJOFINAL_FUNCIONESFIN_H
+
+#include "Variablesnat.h"
+#include <fstream>
+#include <vector>
+entero palabra_en_texto(cadena& texto7, cadena& palabra7){
+    entero auxPal=0,contador=0;
+    for(entero_positivo i=0;i<texto7.size();i++){
+        if(toupper(texto7[i])==toupper(palabra7[auxPal])){
+            auxPal++;
+            if (auxPal==palabra7.size()){
+                if((toupper(texto7[i+1])<65 or toupper(texto7[i+1])>90)and(toupper(texto7[i-auxPal])<65 or toupper(texto7[i-auxPal])>90)){
+                    auxPal=0;
+                    contador++;
+                }
+            }
+        }
+        else
+            auxPal=0;
+    }
+    return contador;
+}
+nada reemplazar(entero& desde, entero& hasta,cadena& texto,cadena& reemplazo,cadena& palabra){
+    vector<caracter> txt;
+    for (char i : texto) {
+        txt.push_back(i);
+    }
+    for(entero i=hasta;i>=desde;i--){
+        txt.erase(txt.begin()+i);
+    }
+    for (entero i=reemplazo.size()-1;i>=0;i--){
+        txt.insert(txt.begin()+desde,reemplazo[i]);
+    }
+    cadena newtxt;
+    for(char i : txt){
+        newtxt+=i;
+    }
+    texto=newtxt;
+}
+nada reemplazar_palabra(cadena& texto8, cadena& palabra8,cadena& reemplazo8){
+    entero auxPal=0,auxw=0,desde,hasta,contador=0, confirmador=0;entero_positivo i;tof caso_especial=false,mayus=true,minus=true;
+    if (palabra8.size()==reemplazo8.size()){
+        for(entero_positivo j=0;j<palabra8.size();j++){
+            if(toupper(palabra8[j])!=reemplazo8[j]) mayus=false;
+            if(tolower(palabra8[j])!=reemplazo8[j]) minus=false;
+            if(mayus or minus)caso_especial=true;
+        }
+    }
+    while(auxw==0) {
+        for (i = 0; i < texto8.size(); i++) {
+            if (toupper(texto8[i])==toupper(palabra8[auxPal])) {
+                auxPal++;
+                if (auxPal == palabra8.size()) {
+                    if ((toupper(texto8[i+1])<65 or toupper(texto8[i+1])>90)and(toupper(texto8[i-auxPal])<65 or toupper(texto8[i-auxPal])>90)) {
+                        contador++;
+                        if(contador>confirmador){
+                            if(caso_especial)confirmador++;
+                            contador=0;
+                            hasta = i;
+                            desde = i - auxPal +1;
+                            auxPal = 0;
+                            reemplazar(desde, hasta, texto8, reemplazo8, palabra8);
+                            break;
+                        }
+                    }
+                }
+            }
+            else auxPal = 0;
+        }
+        if (i==texto8.size()) auxw++;
+    }
+}
+entero palabras_en_texto(cadena& texto9, cadena& palabra9){
+    entero auxPal=0,contador=0;
+    for(entero_positivo i=0;i<texto9.size();i++){
+        if(toupper(texto9[i])==toupper(palabra9[auxPal])){
+            auxPal++;
+            if (auxPal==palabra9.size()){
+                if((toupper(texto9[i+1])<65 or toupper(texto9[i+1])>90)and(toupper(texto9[i-auxPal])<65 or toupper(texto9[i-auxPal])>90)){
+                    auxPal=0;contador++;
+                }
+            }
+        }
+        else
+            auxPal=0;
+    }
+    return contador;
+}
+entero numlineas(ifstream &archivo){
+    letras unused;
+    entero numLines=0;
+    while(getline(archivo, unused)){
+        numLines++;
+    }
+    return numLines;
+}
+letras arcomillas(string texto11){
+    letras texto111="";
+    for(entero i = 0; i<texto11.size(); i++){
+        if (texto11[i]<127 && texto11[i] > -1)
+            texto111+= texto11[i];
+        }
+    return texto111;
+}
+void Alinear_derecha(int n, string &texto){
+    string texto2;
+    int repeticiones = (texto.size()/n)+1;
+    string texto1;
+    int espacios = 80 - n;
+    int cont_repeticiones = 0;
+    int cont_caracter = 1;
+    int cont_espacios = 0;
+    int cont_u = 0;
+    for(int i = 0; i < texto.size(); i++){
+        while(cont_espacios < espacios){
+            texto1 += "-";
+            cont_espacios += 1;
+        }
+        if(cont_caracter == n){
+            if(texto[i] == *" "){
+                texto1 += "\n";
+                int cont_espacios = 0;
+                while(cont_espacios < espacios){
+                    texto1 += "-";
+                    cont_espacios += 1;
+                }
+                texto2 = texto1;
+                cont_caracter = 1;
+            }
+            else{
+                int cont_sobra = 0;
+                int cont_menos = 0;
+                int cont_agregar = 0;
+                int j = texto1.size() - 1;
+                int l = 0;
+                int k = 0;
+                int sobra = 0;
+                int menos = 0;
+                while(texto1[j] != *" "){
+                    cont_sobra += 1;
+                    j -= 1;
+                }
+                sobra = cont_sobra;
+                while(sobra > 0){
+                    texto2 += "-";
+                    sobra -=1;
+                }
+                while(l != texto1.size()){
+                    if(texto1[l] == '\n' || texto1[l] == *"-"){
+                        cont_menos +=1;
+                    }
+                    l += 1;
+                }
+                cont_agregar = (texto2.size() - cont_menos);
+                while(cont_agregar % (n-cont_sobra) != 0){
+                    texto2 += texto[cont_agregar - (1)];
+                    cont_agregar += 1;
+                }
+                texto2 += "\n";
+                int cont_espacios = 0;
+                while(cont_espacios < espacios){
+                    texto2 += "-";
+                    cont_espacios += 1;
+                }
+                while(k != texto2.size()){
+                    if(texto2[k] == '\n' || texto2[k] == *"-"){
+                        menos +=1;
+                    }
+                    k += 1;
+                }
+                texto1 = texto2;
+                cont_u += 1;
+                i = (texto2.size() - (menos));
+                cont_caracter = 1;
+            }
+        }
+        else{
+            cont_caracter += 1;
+            texto1 += texto[i];
+        }
+    }
+    texto = texto1;
+}
+nada Justificado(cadena &parrafo){
+    vector<string> VectorParrafo;
+    bool pruebas=0;
+    string linea;
+    VectorParrafo.push_back(parrafo);
+    string lineaPart;
+    int ancho=70;
+    int contLetras=0;
+    int posUltimoE;
+    for(int i=0; i<VectorParrafo.size(); i++){
+        linea = VectorParrafo[i];
+
+        //aquí empieza
+        while(linea.length()>ancho){
+            lineaPart = linea.substr(0,ancho);
+            if (pruebas==1)
+                cout << "P1 " << lineaPart << endl;
+
+            //si la ultima es espacio
+            if(lineaPart[ancho-1]==' '){
+                //modificar linea
+                linea = linea.substr(ancho);
+                if (pruebas==1){
+                    cout << "Entrada 1" << endl;
+                }
+
+            }else{
+                //si no es espacio, ver si es la ultima letra de una palabra
+                if(linea[ancho]==' '){
+                    if (pruebas==1){
+                        cout << "Entrada 2" << endl;
+                    }
+                    //es la ultima palabra, no hay problema entonces
+                    //modificar linea
+                    linea = linea.substr(ancho+1);
+                    lineaPart = lineaPart+" ";
+
+                }else{
+                    if (pruebas==1){
+                        cout << "Entrada 3" << endl;
+                    }
+                    //tiene una palabra entrecortada, contar cuantas letras se eliminaran y agregaran como espacios
+                    posUltimoE = ancho-1;
+                    for(int m=ancho-1;m>=0;m--){
+                        if(lineaPart[m]==' '){
+                            break;
+                        }else{
+                            posUltimoE--;
+                        }
+                    }
+
+                    contLetras = ancho-posUltimoE-1;
+
+
+                    //modificar linea
+                    linea = linea.substr(ancho-contLetras);
+
+
+                    //eliminar estas letras
+                    lineaPart = lineaPart.substr(0,ancho-contLetras);
+
+                }
+            }
+
+            //Afinamiento
+            //Elimina espacios adelante y atras
+            char letra=lineaPart[0];
+            while(letra==' '){
+                lineaPart = lineaPart.substr(1);
+                letra = lineaPart[0];
+            }
+
+            lineaPart[lineaPart.length()-1]='_';
+
+            if (pruebas==1){
+                cout << lineaPart << endl;
+
+                for(int k=0; k<lineaPart.length();k++)
+                    cout << k%10;
+                cout << endl;
+            }
+
+            int longitud;
+            for(int k=lineaPart.length()-1;k>=0; k--){
+                if(lineaPart[k]=='_'){
+                    longitud=k;break;
+                }
+            }
+
+            int cantEspaciosFaltantes = ancho-longitud;
+            while(cantEspaciosFaltantes!=0){
+                for(int k=0; k<lineaPart.length(); k++){
+                    if(lineaPart[k]==' '){
+                        lineaPart.insert(k," ");
+                        cantEspaciosFaltantes--;
+                        if(cantEspaciosFaltantes==0) break;
+                        if(cantEspaciosFaltantes<0) cantEspaciosFaltantes=0;
+                    }
+                    while(lineaPart[k]==' ' & k<lineaPart.length()){
+                        k++;
+                    }
+                }
+                if(cantEspaciosFaltantes==0) break;
+            }
+
+            lineaPart[lineaPart.length()-1]=' ';
+            cout << lineaPart << endl;
+
+            if (pruebas==1) {
+                for (int k = 0; k < lineaPart.length(); k++)
+                    cout << k % 10;
+                cout << endl;
+            }
+
+//            if(linea.length()<=ancho){
+  //              cout << linea << endl << endl;
+     //       }
+        parrafo=lineaPart+"\n"+linea;
+        }
+    }
+
+}
+
+
+#endif //TRABAJOFINAL_FUNCIONESFIN_H

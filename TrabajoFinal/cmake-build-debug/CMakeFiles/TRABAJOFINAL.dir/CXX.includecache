@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/HP/CLionProjects/POO/TrabajoFinal/Editor.cpp
+Editor.h
+C:/Users/HP/CLionProjects/POO/TrabajoFinal/Editor.h
+FuncionesFin.h
+C:/Users/HP/CLionProjects/POO/TrabajoFinal/FuncionesFin.h
+
+C:/Users/HP/CLionProjects/POO/TrabajoFinal/Editor.h
+fstream
+-
+Variablesnat.h
+C:/Users/HP/CLionProjects/POO/TrabajoFinal/Variablesnat.h
+stdlib.h
+-
+windows.h
+-
+
+C:/Users/HP/CLionProjects/POO/TrabajoFinal/FuncionesFin.h
+Variablesnat.h
+C:/Users/HP/CLionProjects/POO/TrabajoFinal/Variablesnat.h
+fstream
+-
+vector
+-
+
+C:/Users/HP/CLionProjects/POO/TrabajoFinal/Variablesnat.h
+iostream
+-
+string
+-
+
