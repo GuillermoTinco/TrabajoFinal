@@ -27,12 +27,26 @@ Variablesnat.h
 C:/Users/HP/CLionProjects/POO/TrabajoFinal/Variablesnat.h
 fstream
 -
+stdlib.h
+-
+math.h
+-
+string
+-
 vector
+-
+string.h
+-
+cstring
 -
 
 C:/Users/HP/CLionProjects/POO/TrabajoFinal/Variablesnat.h
 iostream
 -
 string
+-
+stdlib.h
+-
+math.h
 -
 

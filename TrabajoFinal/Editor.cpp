@@ -68,13 +68,15 @@ nada EditorTexto::Runcasotres(cadena ubicac) {
         }
         i++;
     }
-    Justificado(texto3);
+    cadena parrafo=texto3;
+    texto3="";
+    Justificado(parrafo, texto3);
     ofstream archivoescribir("C:\\Users\\HP\\ARCHIVOS\\Auxiliar.txt"); //para escribir en el archivo
     if(archivoescribir.is_open()){
         archivoescribir << texto3;}
     archivo.close();
     archivoescribir.close();
-} //
+} //Listo!!!
 nada EditorTexto::Runcasocuatro(cadena ubicac) {
     cadena texto4,txt4;
     ifstream archivo(getUbicac());
@@ -99,14 +101,15 @@ nada EditorTexto::Runcasocuatro(cadena ubicac) {
         }
         i++;
     }
-    Alinear_derecha(9,texto4);
-    cout<<texto4;//la variable texto contiene el archivo modificado
+    cadena parrafo4=texto4;
+    texto4="";
+    AlinearDerecha(parrafo4, texto4);
     ofstream archivoescribir("C:\\Users\\HP\\ARCHIVOS\\Auxiliar.txt"); //para escribir en el archivo
     if(archivoescribir.is_open()){
         archivoescribir << texto4;}
     archivo.close();
     archivoescribir.close();
-} //
+} //Listo!!!
 nada EditorTexto::Runcasocinco(cadena ubicac) {
     cadena texto5,txt5;
     ifstream archivo(getUbicac());
@@ -131,14 +134,15 @@ nada EditorTexto::Runcasocinco(cadena ubicac) {
         }
         i++;
     }
-
-    cout<<texto5;//la variable texto contiene el archivo modificado
+    cadena parrafo5=texto5;
+    texto5="";
+    AlinearIzquierda(parrafo5, texto5);
     ofstream archivoescribir("C:\\Users\\HP\\ARCHIVOS\\Auxiliar.txt"); //para escribir en el archivo
     if(archivoescribir.is_open()){
         archivoescribir << texto5;}
     archivo.close();
     archivoescribir.close();
-} //
+} //Listo!!!
 nada EditorTexto::Runcasoseis(cadena ubicac) {
     cadena texto6,txt6;
     ifstream archivo(getUbicac());
@@ -163,14 +167,15 @@ nada EditorTexto::Runcasoseis(cadena ubicac) {
         }
         i++;
     }
-
-    cout<<texto6;//la variable texto contiene el archivo modificado
+    cadena parrafo6=texto6;
+    texto6="";
+    AlinearCentro(parrafo6, texto6);
     ofstream archivoescribir("C:\\Users\\HP\\ARCHIVOS\\Auxiliar.txt"); //para escribir en el archivo
     if(archivoescribir.is_open()){
         archivoescribir << texto6;}
     archivo.close();
     archivoescribir.close();
-} //
+} //Listo!!!
 nada EditorTexto::Runcasosiete(cadena ubicac) {
     cadena palabra7, texto7,txt7;
     ifstream archivo(getUbicac());

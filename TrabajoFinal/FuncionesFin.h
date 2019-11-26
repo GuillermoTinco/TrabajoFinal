@@ -3,7 +3,79 @@
 
 #include "Variablesnat.h"
 #include <fstream>
+#include <stdlib.h>
+#include <math.h>
+#include <string>
 #include <vector>
+#include <string.h>
+#include <cstring>
+#define MAX 1000
+
+void substring(char *cadena, char *subcadena, int inicio, int longitud)
+{
+    int i;
+
+    for(i=0; i < longitud && inicio+i < strlen(cadena); i++)
+        subcadena[ i ] = cadena[ inicio+i ];
+
+    subcadena[ i ] = '\0';
+}
+
+void centrar_linea(string & lineatextode, char *linea, int ancho)
+{
+    int i, espacios;
+    espacios = (ancho - strlen(linea)) / 2;
+
+    for(i=0; i < espacios; i++){
+        lineatextode+=' ';
+    }
+
+    lineatextode+=linea;
+}
+
+void derecha_linea(string & lineatextode, char *linea, int ancho)
+{
+    int i, espacios;
+    espacios = ancho - strlen(linea);
+
+    for(i=0; i < espacios; i++){
+        lineatextode+=' ';
+    }
+    lineatextode+=linea;
+}
+
+string centrar_cadena(char *cadena, int ancho)
+{
+    string lineatextode="";
+    char subcadena[MAX];
+    int i, total;
+
+    total = (int)ceil((float)strlen(cadena) / ancho);
+
+    for(i=0; i < total; i++)
+    {
+        substring(cadena, subcadena, i*ancho, ancho);
+        centrar_linea(lineatextode, subcadena, ancho);
+    }
+    return lineatextode;
+}
+
+string derecha_cadena(char *cadena, int ancho)
+{
+    string lineatextode="";
+    char subcadena[MAX];
+    int i, total;
+
+    total = (int)ceil((float)strlen(cadena) / ancho);
+
+    for(i=0; i < total; i++)
+    {
+        substring(cadena, subcadena, i*ancho, ancho);
+        derecha_linea(lineatextode, subcadena, ancho);
+    }
+    return lineatextode;
+}
+
 entero palabra_en_texto(cadena& texto7, cadena& palabra7){
     entero auxPal=0,contador=0;
     for(entero_positivo i=0;i<texto7.size();i++){
@@ -103,86 +175,328 @@ letras arcomillas(string texto11){
         }
     return texto111;
 }
-void Alinear_derecha(int n, string &texto){
-    string texto2;
-    int repeticiones = (texto.size()/n)+1;
-    string texto1;
-    int espacios = 80 - n;
-    int cont_repeticiones = 0;
-    int cont_caracter = 1;
-    int cont_espacios = 0;
-    int cont_u = 0;
-    for(int i = 0; i < texto.size(); i++){
-        while(cont_espacios < espacios){
-            texto1 += "-";
-            cont_espacios += 1;
-        }
-        if(cont_caracter == n){
-            if(texto[i] == *" "){
-                texto1 += "\n";
-                int cont_espacios = 0;
-                while(cont_espacios < espacios){
-                    texto1 += "-";
-                    cont_espacios += 1;
+nada AlinearDerecha(cadena &parrafo, string &texto4){
+    vector<string> VectorParrafo;
+    bool pruebas=0;
+    string linea;
+    VectorParrafo.push_back(parrafo);
+    string lineaPart;
+    int ancho=70;
+    int contLetras=0;
+    int posUltimoE;
+    for(int i=0; i<VectorParrafo.size(); i++){
+        linea = VectorParrafo[i];
+
+        //aquí empieza
+        while(linea.length()>ancho){
+            lineaPart = linea.substr(0,ancho);
+            if (pruebas==1)
+                cout << "P1 " << lineaPart << endl;
+
+            //si la ultima es espacio
+            if(lineaPart[ancho-1]==' '){
+                //modificar linea
+                linea = linea.substr(ancho);
+                if (pruebas==1){
+                    cout << "Entrada 1" << endl;
                 }
-                texto2 = texto1;
-                cont_caracter = 1;
-            }
-            else{
-                int cont_sobra = 0;
-                int cont_menos = 0;
-                int cont_agregar = 0;
-                int j = texto1.size() - 1;
-                int l = 0;
-                int k = 0;
-                int sobra = 0;
-                int menos = 0;
-                while(texto1[j] != *" "){
-                    cont_sobra += 1;
-                    j -= 1;
-                }
-                sobra = cont_sobra;
-                while(sobra > 0){
-                    texto2 += "-";
-                    sobra -=1;
-                }
-                while(l != texto1.size()){
-                    if(texto1[l] == '\n' || texto1[l] == *"-"){
-                        cont_menos +=1;
+
+            }else{
+                //si no es espacio, ver si es la ultima letra de una palabra
+                if(linea[ancho]==' '){
+                    if (pruebas==1){
+                        cout << "Entrada 2" << endl;
                     }
-                    l += 1;
-                }
-                cont_agregar = (texto2.size() - cont_menos);
-                while(cont_agregar % (n-cont_sobra) != 0){
-                    texto2 += texto[cont_agregar - (1)];
-                    cont_agregar += 1;
-                }
-                texto2 += "\n";
-                int cont_espacios = 0;
-                while(cont_espacios < espacios){
-                    texto2 += "-";
-                    cont_espacios += 1;
-                }
-                while(k != texto2.size()){
-                    if(texto2[k] == '\n' || texto2[k] == *"-"){
-                        menos +=1;
+                    //es la ultima palabra, no hay problema entonces
+                    //modificar linea
+                    linea = linea.substr(ancho+1);
+                    lineaPart = lineaPart+" ";
+
+                }else{
+                    if (pruebas==1){
+                        cout << "Entrada 3" << endl;
                     }
-                    k += 1;
+                    //tiene una palabra entrecortada, contar cuantas letras se eliminaran y agregaran como espacios
+                    posUltimoE = ancho-1;
+                    for(int m=ancho-1;m>=0;m--){
+                        if(lineaPart[m]==' '){
+                            break;
+                        }else{
+                            posUltimoE--;
+                        }
+                    }
+
+                    contLetras = ancho-posUltimoE-1;
+
+
+                    //modificar linea
+                    linea = linea.substr(ancho-contLetras);
+
+
+                    //eliminar estas letras
+                    lineaPart = lineaPart.substr(0,ancho-contLetras);
+
                 }
-                texto1 = texto2;
-                cont_u += 1;
-                i = (texto2.size() - (menos));
-                cont_caracter = 1;
             }
-        }
-        else{
-            cont_caracter += 1;
-            texto1 += texto[i];
+
+            //Afinamiento
+            //Elimina espacios adelante y atras
+            char letra=lineaPart[0];
+            while(letra==' '){
+                lineaPart = lineaPart.substr(1);
+                letra = lineaPart[0];
+            }
+
+            lineaPart[lineaPart.length()-1]='_';
+
+            if (pruebas==1){
+                cout << lineaPart << endl;
+
+                for(int k=0; k<lineaPart.length();k++)
+                    cout << k%10;
+                cout << endl;
+            }
+
+            int longitud;
+            for(int k=lineaPart.length()-1;k>=0; k--){
+                if(lineaPart[k]=='_'){
+                    longitud=k;break;
+                }
+            }
+            lineaPart[lineaPart.length()-1]=' ';
+            char cadena1[MAX];
+            strcpy(cadena1, lineaPart.c_str());
+            string lineaPart2 = derecha_cadena(cadena1,80);
+            texto4 += lineaPart2+"\n";
+            if (pruebas==1) {
+                for (int k = 0; k < lineaPart.length(); k++)
+                    cout << k % 10;
+                cout << endl;
+            }
+
+        //    if(linea.length()<=ancho){
+          //      cout << linea << endl << endl;
+            //}
+
+            //parrafo=lineaPart2+"\n"+linea;
         }
     }
-    texto = texto1;
+
 }
-nada Justificado(cadena &parrafo){
+nada AlinearIzquierda(cadena &parrafo, string &texto5){
+    vector<string> VectorParrafo;
+    bool pruebas=0;
+    string linea;
+    VectorParrafo.push_back(parrafo);
+    string lineaPart;
+    int ancho=70;
+    int contLetras=0;
+    int posUltimoE;
+    for(int i=0; i<VectorParrafo.size(); i++){
+        linea = VectorParrafo[i];
+
+        //aquí empieza
+        while(linea.length()>ancho){
+            lineaPart = linea.substr(0,ancho);
+            if (pruebas==1)
+                cout << "P1 " << lineaPart << endl;
+
+            //si la ultima es espacio
+            if(lineaPart[ancho-1]==' '){
+                //modificar linea
+                linea = linea.substr(ancho);
+                if (pruebas==1){
+                    cout << "Entrada 1" << endl;
+                }
+
+            }else{
+                //si no es espacio, ver si es la ultima letra de una palabra
+                if(linea[ancho]==' '){
+                    if (pruebas==1){
+                        cout << "Entrada 2" << endl;
+                    }
+                    //es la ultima palabra, no hay problema entonces
+                    //modificar linea
+                    linea = linea.substr(ancho+1);
+                    lineaPart = lineaPart+" ";
+
+                }else{
+                    if (pruebas==1){
+                        cout << "Entrada 3" << endl;
+                    }
+                    //tiene una palabra entrecortada, contar cuantas letras se eliminaran y agregaran como espacios
+                    posUltimoE = ancho-1;
+                    for(int m=ancho-1;m>=0;m--){
+                        if(lineaPart[m]==' '){
+                            break;
+                        }else{
+                            posUltimoE--;
+                        }
+                    }
+
+                    contLetras = ancho-posUltimoE-1;
+
+
+                    //modificar linea
+                    linea = linea.substr(ancho-contLetras);
+
+
+                    //eliminar estas letras
+                    lineaPart = lineaPart.substr(0,ancho-contLetras);
+
+                }
+            }
+
+            //Afinamiento
+            //Elimina espacios adelante y atras
+            char letra=lineaPart[0];
+            while(letra==' '){
+                lineaPart = lineaPart.substr(1);
+                letra = lineaPart[0];
+            }
+
+            lineaPart[lineaPart.length()-1]='_';
+
+            if (pruebas==1){
+                cout << lineaPart << endl;
+
+                for(int k=0; k<lineaPart.length();k++)
+                    cout << k%10;
+                cout << endl;
+            }
+
+            int longitud;
+            for(int k=lineaPart.length()-1;k>=0; k--){
+                if(lineaPart[k]=='_'){
+                    longitud=k;break;
+                }
+            }
+            lineaPart[lineaPart.length()-1]=' ';
+            cout << lineaPart << endl;
+            texto5 += lineaPart+"\n";
+            if (pruebas==1) {
+                for (int k = 0; k < lineaPart.length(); k++)
+                    cout << k % 10;
+                cout << endl;
+            }
+
+           if(linea.length()<=ancho){
+           cout << linea << endl << endl;
+           }
+            parrafo=lineaPart+"\n"+linea;
+        }
+    }
+
+}
+nada AlinearCentro(cadena &parrafo, string &texto6){
+    vector<string> VectorParrafo;
+    bool pruebas=0;
+    string linea;
+    VectorParrafo.push_back(parrafo);
+    string lineaPart;
+    int ancho=70;
+    int contLetras=0;
+    int posUltimoE;
+    for(int i=0; i<VectorParrafo.size(); i++){
+        linea = VectorParrafo[i];
+
+        //aquí empieza
+        while(linea.length()>ancho){
+            lineaPart = linea.substr(0,ancho);
+            if (pruebas==1)
+                cout << "P1 " << lineaPart << endl;
+
+            //si la ultima es espacio
+            if(lineaPart[ancho-1]==' '){
+                //modificar linea
+                linea = linea.substr(ancho);
+                if (pruebas==1){
+                    cout << "Entrada 1" << endl;
+                }
+
+            }else{
+                //si no es espacio, ver si es la ultima letra de una palabra
+                if(linea[ancho]==' '){
+                    if (pruebas==1){
+                        cout << "Entrada 2" << endl;
+                    }
+                    //es la ultima palabra, no hay problema entonces
+                    //modificar linea
+                    linea = linea.substr(ancho+1);
+                    lineaPart = lineaPart+" ";
+
+                }else{
+                    if (pruebas==1){
+                        cout << "Entrada 3" << endl;
+                    }
+                    //tiene una palabra entrecortada, contar cuantas letras se eliminaran y agregaran como espacios
+                    posUltimoE = ancho-1;
+                    for(int m=ancho-1;m>=0;m--){
+                        if(lineaPart[m]==' '){
+                            break;
+                        }else{
+                            posUltimoE--;
+                        }
+                    }
+
+                    contLetras = ancho-posUltimoE-1;
+
+
+                    //modificar linea
+                    linea = linea.substr(ancho-contLetras);
+
+
+                    //eliminar estas letras
+                    lineaPart = lineaPart.substr(0,ancho-contLetras);
+
+                }
+            }
+
+            //Afinamiento
+            //Elimina espacios adelante y atras
+            char letra=lineaPart[0];
+            while(letra==' '){
+                lineaPart = lineaPart.substr(1);
+                letra = lineaPart[0];
+            }
+
+            lineaPart[lineaPart.length()-1]='_';
+
+            if (pruebas==1){
+                cout << lineaPart << endl;
+
+                for(int k=0; k<lineaPart.length();k++)
+                    cout << k%10;
+                cout << endl;
+            }
+
+            int longitud;
+            for(int k=lineaPart.length()-1;k>=0; k--){
+                if(lineaPart[k]=='_'){
+                    longitud=k;break;
+                }
+            }
+            lineaPart[lineaPart.length()-1]=' ';
+            char cadena1[MAX];
+            strcpy(cadena1, lineaPart.c_str());
+            string lineaPart2 = centrar_cadena(cadena1,80);
+            texto6 += lineaPart2+"\n";
+            if (pruebas==1) {
+                for (int k = 0; k < lineaPart.length(); k++)
+                    cout << k % 10;
+                cout << endl;
+            }
+
+            //    if(linea.length()<=ancho){
+            //      cout << linea << endl << endl;
+            //}
+
+            //parrafo=lineaPart2+"\n"+linea;
+        }
+    }
+
+}
+nada Justificado(cadena &parrafo, string &texto3){
     vector<string> VectorParrafo;
     bool pruebas=0;
     string linea;
@@ -289,16 +603,16 @@ nada Justificado(cadena &parrafo){
 
             lineaPart[lineaPart.length()-1]=' ';
             cout << lineaPart << endl;
-
+            texto3 += lineaPart+"\n";
             if (pruebas==1) {
                 for (int k = 0; k < lineaPart.length(); k++)
                     cout << k % 10;
                 cout << endl;
             }
 
-//            if(linea.length()<=ancho){
-  //              cout << linea << endl << endl;
-     //       }
+            if(linea.length()<=ancho){
+               cout << linea << endl << endl;
+         }
         parrafo=lineaPart+"\n"+linea;
         }
     }
