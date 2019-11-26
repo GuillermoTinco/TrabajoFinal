@@ -1,0 +1,32 @@
+//problema 2
+#include <iostream>
+#include <fstream>//Para abrir un fichero para lectura, debe crear un objeto ifstream que se usará como cin.
+#include <string>//cadenas de texto
+#include <vector>
+#include <iomanip>//para manejar formatos, posicionar el texto donde quieras(centrado) setw
+
+using namespace std;
+
+int main() {
+  ofstream miarchivo("ejemplo1.txt");//para escribir en el archivo 
+  string texto="";
+  cout <<"Ingrese el texto, cuando finalice ingrese X: " << endl;
+  if(miarchivo.is_open())
+  {
+    do{
+      getline(cin, texto);
+      
+      if(texto == "X"){
+        break;
+      }
+      else{
+        miarchivo<<texto<<endl; 
+      }
+
+    }while(texto!="X");
+  }
+  cout << "Texto grabado" << endl;
+  miarchivo.close();
+  
+}
+
